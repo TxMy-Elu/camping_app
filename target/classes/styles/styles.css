@@ -1,0 +1,148 @@
+/* Styles pour les champs de texte */
+.text-field {
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-font-weight: bold;
+    -fx-border-width: 0 0 1 0;
+}
+
+.text-color {
+    -fx-prompt-text-fill: #c7c7c7;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.txt-field {
+    -fx-text-fill: #363636;
+}
+
+/* Styles pour les boutons */
+.btn-styleLog {
+    -fx-background-color: rgb(245, 89, 40);
+    -fx-text-fill: white;
+}
+
+.btn-style:hover {
+    -fx-background-color: rgb(154, 63, 28);
+}
+
+.btn-trans {
+    -fx-background-color: transparent;
+    -fx-font-size: 18px;
+}
+
+.btn-style {
+    -fx-background-color: #5F7E7C;
+    -fx-text-fill: white;
+    -fx-min-width: 100px;
+    -fx-font-size: 17px;
+    -fx-border-radius: 16px;
+}
+
+.btn-style:hover {
+    -fx-background-color: #506967;
+}
+
+/* Styles pour les boutons d'action */
+.btnAc-style {
+    -fx-background-color: #6EACDA;
+}
+
+.btnAc-style:hover {
+    -fx-background-color: #021526;
+}
+
+/* Styles pour les boutons de modification */
+.btnModif-style {
+    -fx-background-color: #ff6e07;
+    -fx-text-fill: white;
+    -fx-min-width: 100px;
+    -fx-font-size: 17px;
+}
+
+.btnModif-style:hover {
+    -fx-background-color: #bd4f01;
+}
+
+/* Styles pour les boutons de suppression */
+.btnSup-style {
+    -fx-background-color: #ff0000;
+    -fx-text-fill: white;
+    -fx-min-width: 100px;
+    -fx-font-size: 17px;
+}
+
+/* Styles pour les boutons d'ajout */
+.btnAjoute-style {
+    -fx-background-color: #01a601;
+    -fx-text-fill: white;
+    -fx-min-width: 100px;
+    -fx-font-size: 17px;
+}
+
+/* Styles pour les panneaux */
+.pane-style {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-background-radius: 16px;
+    -fx-border-color: rgba(255, 255, 255, 0.3);
+    -fx-border-width: 1px;
+    -fx-border-radius: 16px;
+}
+
+.pane-color {
+    -fx-background-color: #232025;
+}
+
+/* Styles pour les effets de panneau */
+.pane-effect {
+    -fx-margin: 5px;
+}
+
+.pane-effect:hover {
+    -fx-border-color: #5F7E7C;
+    -fx-border-width: 0 0 2 0;
+}
+
+/* Styles pour le fond */
+.bg-style {
+    -fx-background-image: url('../image/fond.png');
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.bg-color {
+    -fx-background-color: #f2f2f3;
+}
+
+/* Styles pour les champs de texte de date */
+.date-picker .text-field {
+    -fx-text-fill: black;
+}
+
+/* Styles pour les semaines */
+.semaine {
+    -fx-background-color: rgb(95, 126, 124);
+    -fx-text-fill: white;
+    -fx-font-size: 17px;
+}
+
+/* Styles pour les cellules */
+.cell-border, .day-border, .hour-border {
+    -fx-border-color: black;
+    -fx-border-width: 1;
+    -fx-alignment: center;
+    -fx-pref-width: 300px;
+    -fx-pref-height: 100px;
+}
+
+/* Styles pour les activités */
+.activity {
+    -fx-background-color: #f2f2f3;
+    -fx-border-color: #000000;
+    -fx-border-width: 1px;
+    -fx-background-radius: 16px;
+    -fx-pref-width: 300px;
+    -fx-pref-height: 100px;
+    -fx-alignment: center;
+}

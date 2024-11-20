@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0"
+            prefWidth="900.0" stylesheets="@../../../styles/styles.css" xmlns="http://javafx.com/javafx/22"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.camping.LoadController">
+    <children>
+        <Pane prefHeight="450.0" prefWidth="120.0" styleClass="pane-color" AnchorPane.bottomAnchor="0.0"
+              AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="10.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../image/logo.png"/>
+                    </image>
+                </ImageView>
+                <Separator layoutX="10.0" layoutY="99.0" prefHeight="3.0" prefWidth="100.0"/>
+            </children>
+        </Pane>
+        <Label alignment="CENTER" layoutX="135.0" layoutY="27.0" prefHeight="45.0" prefWidth="140.0" text="Planning">
+            <font>
+                <Font size="24.0"/>
+            </font>
+        </Label>
+        <Separator layoutX="121.0" layoutY="98.0" prefHeight="3.0" prefWidth="979.0" AnchorPane.leftAnchor="121.0"
+                   AnchorPane.rightAnchor="0.0"/>
+        <MFXButton layoutX="751.0" layoutY="400.0" mnemonicParsing="false" onAction="#onAjoutActClicked"
+                   prefHeight="30.0" prefWidth="135.0" text="Ajout " fx:id="btnAjoutAct" styleClass="btn-style"/>
+
+        <HBox layoutX="137.0" layoutY="123.0" prefHeight="100.0" prefWidth="750.0" spacing="5.0"
+              AnchorPane.leftAnchor="137.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="123.0">
+            <children>
+                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="445.0">
+                    <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="100.0"
+                               text="Animation : "/>
+                        <ChoiceBox fx:id="Animation_choiceBox" prefHeight="25.0" prefWidth="296.0"/>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="445.0">
+                    <children>
+                        <Label prefWidth="100.0" text="Animateur : "/>
+                        <ChoiceBox fx:id="Animateur_choiceBox" prefHeight="25.0" prefWidth="297.0"/>
+                    </children>
+                </HBox>
+            </children>
+        </HBox>
+        <HBox layoutX="137.0" layoutY="232.0" prefHeight="60.0" prefWidth="750.0" spacing="5.0"
+              AnchorPane.leftAnchor="137.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="232.0">
+            <children>
+                <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="445.0">
+                    <children>
+                        <Label alignment="CENTER" prefWidth="100.0" text="Lieu : "/>
+                        <ChoiceBox fx:id="Lieu_ChoiceBox" prefWidth="296.0"/>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="445.0">
+                    <children>
+                        <Label alignment="CENTER" prefWidth="100.0" text="Durée : "/>
+                        <TextField fx:id="dureeAct" prefHeight="26.0" prefWidth="296.0" styleClass="txt-field"/>
+                    </children>
+                </HBox>
+            </children>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" layoutX="137.0" layoutY="319.0" prefHeight="60.0" prefWidth="372.0">
+            <children>
+                <Label alignment="CENTER" prefWidth="100.0" text="Date : "/>
+                <DatePicker fx:id="date" prefHeight="26.0" prefWidth="269.0"/>
+            </children>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" layoutX="512.0" layoutY="319.0" prefHeight="60.0" prefWidth="372.0">
+            <children>
+                <Label alignment="CENTER" prefWidth="100.0" text="Heure : "/>
+                <TextField fx:id="HeurePl" prefHeight="26.0" prefWidth="296.0" styleClass="txt-field" promptText="Format : HH:mm / heure pleine"/>
+            </children>
+
+        </HBox>
+    </children>
+</AnchorPane>

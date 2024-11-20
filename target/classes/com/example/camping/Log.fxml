@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1344.0" styleClass="bg-style" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.camping.LogController">
+   <children>
+      <Pane layoutX="172.0" layoutY="155.0" prefHeight="458.0" prefWidth="367.0">
+         <children>
+            <ImageView fitHeight="142.0" fitWidth="142.0" layoutX="113.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../image/logo.png" />
+               </image>
+            </ImageView>
+            <AnchorPane layoutY="115.0" prefHeight="343.0" prefWidth="367.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="272.0" prefWidth="367.0" spacing="50.0">
+                     <children>
+                        <TextField fx:id="logintxt" alignment="CENTER" focusTraversable="false" prefHeight="30.0" prefWidth="267.0" promptText="LOGIN" style="-fx-background-color: #021526; -fx-opacity: 90%;" styleClass="text-color">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font></TextField>
+                        <TextField fx:id="passwordtxt" alignment="CENTER" focusTraversable="false" prefHeight="30.0" prefWidth="267.0" promptText="PASSWORD" style="-fx-background-color: #021526; -fx-opacity: 90%;" styleClass="text-color">
+                           <font>
+                              <Font size="14.0" />
+                           </font></TextField>
+                        <MFXButton fx:id="Submit" computeRadiusMultiplier="false" contentDisplay="CENTER" onAction="#onConnexionButtonClick" prefHeight="25.0" prefWidth="100.0" rippleColor="WHITE" styleClass="btn-styleLog" text="Connexion" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="50.0" right="50.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </children>
+         <styleClass>
+            <String fx:value="pane-style" />
+         </styleClass>
+      </Pane>
+   </children>
+   <stylesheets>
+      <URL value="@../../../styles/styles.css" />
+   </stylesheets>
+</AnchorPane>
