@@ -37,7 +37,7 @@ public class Animateur {
             try (Statement stmt = c.getConnection().createStatement(); ResultSet res = stmt.executeQuery(getQuery())) {
 
                 while (res.next()) {
-                    Animateur animateur = new Animateur(res.getInt("id_animateur"), res.getString("nom"), res.getString("prenom"), res.getString("email"));
+                    Animateur animateur = new Animateur(res.getInt("id_compte"), res.getString("nom"), res.getString("prenom"), res.getString("email"));
                     lesAnimateur.add(animateur);
                 }
             } catch (SQLException e) {
@@ -61,6 +61,7 @@ public class Animateur {
                 stmt.setString(1, nom);
                 stmt.setString(2, prenom);
                 stmt.setString(3, email);
+                stmt.setString(4, "animateur");
                 stmt.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -68,12 +69,12 @@ public class Animateur {
         }
     }
 
-    /** Requete SQL Selection all dans animateur
+    /** Requete SQL Selection all dans compte avec role animateur
      *
      * @return
      */
     private static String getQuery() {
-        return "SELECT * FROM animateur";
+        return "SELECT * FROM compte WHERE role = 'animateur'";
     }
 
     /** Supprimer Animateur
@@ -83,7 +84,7 @@ public class Animateur {
     public static void deleteAnimateur(int idAnimateur) {
         ConnexionBDD c = new ConnexionBDD();
         if (c != null) {
-            try (PreparedStatement stmt = c.getConnection().prepareStatement("DELETE FROM animateur WHERE id_animateur = ?")) {
+            try (PreparedStatement stmt = c.getConnection().prepareStatement("DELETE FROM compte WHERE id_compte = ? AND role = 'animateur'")) {
                 stmt.setInt(1, idAnimateur);
                 stmt.executeUpdate();
             } catch (SQLException e) {
@@ -102,7 +103,7 @@ public class Animateur {
     public static void updateAnimateur(int idAnimateur, String text, String text1, String text2) {
         ConnexionBDD c = new ConnexionBDD();
         if (c != null) {
-            try (PreparedStatement stmt = c.getConnection().prepareStatement("UPDATE animateur SET nom = ?, prenom = ?, email = ? WHERE id_animateur = ?")) {
+            try (PreparedStatement stmt = c.getConnection().prepareStatement("UPDATE compte SET nom = ?, prenom = ?, email = ? WHERE id_compte = ? AND role = 'animateur'")) {
                 stmt.setString(1, text);
                 stmt.setString(2, text1);
                 stmt.setString(3, text2);
@@ -184,7 +185,7 @@ public class Animateur {
      */
     @Override
     public String toString() {
-        return  prenom_Animateur;
+        return prenom_Animateur;
     }
 
     /** Get de Ajout Animateur dans la BDD
@@ -192,6 +193,6 @@ public class Animateur {
      * @return
      */
     private static String getInsertQuery() {
-        return "INSERT INTO animateur (nom, prenom, email) VALUES (?, ?, ?)";
+        return "INSERT INTO compte (nom, prenom, email, role) VALUES (?, ?, ?, ?)";
     }
 }

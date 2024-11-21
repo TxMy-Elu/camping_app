@@ -91,6 +91,8 @@ public class LoadController {
     @FXML
     private TextField HeurePl;
     @FXML
+    private TextField Places;
+    @FXML
     private TextField dureeAct;
     @FXML
     private Label semaine;
@@ -628,6 +630,7 @@ public class LoadController {
         String id_Lieu = Lieu_ChoiceBox.getValue();
         String dure = dureeAct.getText();
         String heure = HeurePl.getText();
+        String nbPLaces = Places.getText();
 
         if (heure.length() == 1) {
             heure = "0" + heure + ":00:00";
@@ -646,6 +649,7 @@ public class LoadController {
         System.out.println("id_Animation: " + id_Animation);
         System.out.println("id_Lieu: " + id_Lieu);
         System.out.println("date: " + dates);
+        System.out.println("duree: " + dure);
 
         if (id_Animateur == null || id_Animation == null || id_Lieu == null || date == null || dure.isEmpty()) {
             System.out.println("Veuillez remplir tous les champs");
@@ -661,16 +665,15 @@ public class LoadController {
                 System.out.println("Impossible d'ajouter l'activité à ce créneau.");
 
             } else {
-                DatabaseHelper.ajoutPlanning(id_Animateur, id_Animation, id_Lieu, dates, dure);
-                loadView("Accueil.fxml", "Accueil",btnAjoutAct );
+                DatabaseHelper.ajoutPlanning(id_Animateur, id_Animation, id_Lieu, dates, dure, Integer.parseInt(nbPLaces));
+                loadView("Accueil.fxml", "Accueil", btnAjoutAct);
             }
-
 
 
             Stage currentStage = (Stage) btnAjoutAct.getScene().getWindow();
             currentStage.close();
 
-            loadView("Accueil.fxml", "Accueil",btnAjoutAct );
+            loadView("Accueil.fxml", "Accueil", btnAjoutAct);
         }
     }
 
@@ -818,7 +821,14 @@ public class LoadController {
         ConnexionBDD c = new ConnexionBDD();
         Connection conn = c.getConnection();
         try {
-            String query = "SELECT animateur.nom, animateur.prenom, animateur.email, creneaux.date_heure, animation.nom AS animation_nom, lieu.libelle " + "FROM animateur " + "INNER JOIN relation1 ON animateur.id_animateur = relation1.id_animateur " + "INNER JOIN creneaux ON relation1.id_creneaux = creneaux.id_creneaux " + "INNER JOIN animation ON creneaux.id = animation.id " + "INNER JOIN lieu ON creneaux.id_lieu = lieu.id_lieu " + "WHERE creneaux.date_heure BETWEEN ? AND ? " + "ORDER BY animateur.nom ASC";
+            String query = "SELECT compte.nom, compte.prenom, compte.email, creneaux.date_heure, animation.nom AS animation_nom, lieu.libelle " +
+                       "FROM compte " +
+                       "INNER JOIN relation1 ON compte.id_compte = relation1.id_compte " +
+                       "INNER JOIN creneaux ON relation1.id_creneaux = creneaux.id_creneaux " +
+                       "INNER JOIN animation ON creneaux.id = animation.id " +
+                       "INNER JOIN lieu ON creneaux.id_lieu = lieu.id_lieu " +
+                       "WHERE creneaux.date_heure BETWEEN ? AND ? " +
+                       "ORDER BY compte.nom ASC;";
             System.out.println("Query: " + query);
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, currentDate.with(java.time.DayOfWeek.MONDAY).toString());
