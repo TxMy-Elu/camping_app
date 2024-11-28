@@ -659,13 +659,14 @@ public class LoadController {
             String nom_Animateur = id_Animateur.split(" ")[0];
             String prenom_Animateur = id_Animateur.split(" ")[1];
             int id = DatabaseHelper.getIdAnimateur(nom_Animateur, prenom_Animateur);
+            int id_global = DatabaseHelper.getIdGlobal()+1;
 
             boolean canAdd = DatabaseHelper.verifAjout(dates, Integer.parseInt(dure), id);
             if (canAdd == false) {
                 System.out.println("Impossible d'ajouter l'activité à ce créneau.");
 
             } else {
-                DatabaseHelper.ajoutPlanning(id_Animateur, id_Animation, id_Lieu, dates, dure, Integer.parseInt(nbPLaces));
+                DatabaseHelper.ajoutPlanning(id_Animateur, id_Animation, id_Lieu, dates, dure, Integer.parseInt(nbPLaces), id_global);
                 loadView("Accueil.fxml", "Accueil", btnAjoutAct);
             }
 

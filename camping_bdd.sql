@@ -36,14 +36,14 @@ END$$
 
 -- Updated Procedure ajoutCreneau
 DROP PROCEDURE IF EXISTS `ajoutCreneau` $$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ajoutCreneau` (IN `dh` DATETIME, IN `id_animation` INT, IN `id_l` INT, IN `duree` INT, IN `id_ani` INT, IN `places_totales` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ajoutCreneau` (IN `dh` DATETIME, IN `id_animation` INT, IN `id_l` INT, IN `duree` INT, IN `id_ani` INT, IN `places_totales` INT, IN `global_id` INT)
 BEGIN
     DECLARE i INT DEFAULT 0;
     DECLARE last_id INT;
 
     WHILE i < duree DO
-        INSERT INTO creneaux (date_heure, id, id_lieu, Duree, places_totales, places_prises)
-        VALUES (dh, id_animation, id_l, duree, places_totales, 0);
+        INSERT INTO creneaux (date_heure, id, id_lieu, Duree, places_totales, places_prises, id_global)
+        VALUES (dh, id_animation, id_l, duree, places_totales, 0, global_id);
 
         -- Retrieve the last inserted ID
         SET last_id = LAST_INSERT_ID();
@@ -143,6 +143,7 @@ CREATE TABLE IF NOT EXISTS `creneaux` (
     `Duree` INT NOT NULL,
     `places_totales` INT NOT NULL,
     `places_prises` INT NOT NULL,
+    `id_global` INT NOT NULL,
     PRIMARY KEY (`id_creneaux`),
     KEY `Creneaux_animation_FK` (`id`),
     KEY `Creneaux_lieu0_FK` (`id_lieu`)

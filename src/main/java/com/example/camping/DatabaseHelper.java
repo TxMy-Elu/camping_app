@@ -91,36 +91,36 @@ public class DatabaseHelper {
      * @param date
      * @param dure
      */
-    public static void ajoutPlanning(String Animateur, String Animation, String Lieu, LocalDateTime date, String dure, int places_total) {
-    ConnexionBDD c = new ConnexionBDD();
-    if (c != null) {
-        try {
-            Statement stmt = c.getConnection().createStatement();
-            // l'id de l'animation selon son nom
-            ResultSet res = stmt.executeQuery("SELECT id FROM animation WHERE nom = '" + Animation + "'");
-            res.next();
-            int id_Animation = res.getInt("id");
+    public static void ajoutPlanning(String Animateur, String Animation, String Lieu, LocalDateTime date, String dure, int places_total, int id_global) {
+        ConnexionBDD c = new ConnexionBDD();
+        if (c != null) {
+            try {
+                Statement stmt = c.getConnection().createStatement();
+                // l'id de l'animation selon son nom
+                ResultSet res = stmt.executeQuery("SELECT id FROM animation WHERE nom = '" + Animation + "'");
+                res.next();
+                int id_Animation = res.getInt("id");
 
-            // l'id de l'animateur selon son nom
-            res = stmt.executeQuery("SELECT id_compte FROM compte WHERE nom = '" + Animateur.split(" ")[0] + "' AND prenom = '" + Animateur.split(" ")[1] + "' and role='animateur'");
-            res.next();
-            int id_Animateur = res.getInt("id_compte");
+                // l'id de l'animateur selon son nom
+                res = stmt.executeQuery("SELECT id_compte FROM compte WHERE nom = '" + Animateur.split(" ")[0] + "' AND prenom = '" + Animateur.split(" ")[1] + "' and role='animateur'");
+                res.next();
+                int id_Animateur = res.getInt("id_compte");
 
-            // l'id du lieu selon son nom
-            res = stmt.executeQuery("SELECT id_lieu FROM lieu WHERE libelle = '" + Lieu + "'");
-            res.next();
-            int id_Lieu = res.getInt("id_lieu");
+                // l'id du lieu selon son nom
+                res = stmt.executeQuery("SELECT id_lieu FROM lieu WHERE libelle = '" + Lieu + "'");
+                res.next();
+                int id_Lieu = res.getInt("id_lieu");
 
-            // appel ma procedure stockée pour ajouter un créneau
-            stmt.execute("CALL ajoutCreneau('" + date + "', " + id_Animation + ", " + id_Lieu + ", " + dure + ", " + id_Animateur + " , " + places_total + ")");
+                // appel ma procedure stockée pour ajouter un créneau
+                stmt.execute("CALL ajoutCreneau('" + date + "', " + id_Animation + ", " + id_Lieu + ", " + dure + ", " + id_Animateur + " , " + places_total + ", " + id_global + ")");
 
-            System.out.println("Ajout de planning réussi");
+                System.out.println("Ajout de planning réussi");
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
-}
 
     /**
      * Verification de Ajout
@@ -151,26 +151,26 @@ public class DatabaseHelper {
      * @return
      */
     public static HashMap<Animateur, Creneaux> getAct(LocalDate currentDate) {
-    HashMap<Animateur, Creneaux> lesAct = new HashMap<>();
-    ConnexionBDD c = new ConnexionBDD();
-    if (c != null) {
-        try {
-            Statement stmt = c.getConnection().createStatement();
-            ResultSet res = stmt.executeQuery(getQuery(currentDate));
-            while (res.next()) {
-                Animateur _animateur = new Animateur(res.getInt("id_compte"), res.getString("nom"), res.getString("prenom"), res.getString("email"));
-                Date date = res.getDate("date_heure");
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(date);
-                Creneaux _creneaux = new Creneaux(res.getInt("id_creneaux"), cal, res.getInt("id"), res.getInt("id_lieu"));
-                lesAct.put(_animateur, _creneaux);
+        HashMap<Animateur, Creneaux> lesAct = new HashMap<>();
+        ConnexionBDD c = new ConnexionBDD();
+        if (c != null) {
+            try {
+                Statement stmt = c.getConnection().createStatement();
+                ResultSet res = stmt.executeQuery(getQuery(currentDate));
+                while (res.next()) {
+                    Animateur _animateur = new Animateur(res.getInt("id_compte"), res.getString("nom"), res.getString("prenom"), res.getString("email"));
+                    Date date = res.getDate("date_heure");
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(date);
+                    Creneaux _creneaux = new Creneaux(res.getInt("id_creneaux"), cal, res.getInt("id"), res.getInt("id_lieu"));
+                    lesAct.put(_animateur, _creneaux);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+        return lesAct;
     }
-    return lesAct;
-}
 
     /**
      * GetQuery
@@ -181,15 +181,7 @@ public class DatabaseHelper {
     private static String getQuery(LocalDate currentDate) {
         LocalDate startOfWeek = currentDate.with(java.time.DayOfWeek.MONDAY);
         LocalDate endOfWeek = currentDate.with(java.time.DayOfWeek.SUNDAY);
-        return "SELECT * FROM relation1 "
-        + "INNER JOIN compte ON compte.id_compte = relation1.id_compte "
-        + "INNER JOIN creneaux ON creneaux.id_creneaux = relation1.id_creneaux "
-        + "INNER JOIN animation ON animation.id = creneaux.id "
-        + "WHERE creneaux.date_heure BETWEEN '"
-        + startOfWeek
-        + "' AND '"
-        + endOfWeek + "' "
-        + "ORDER BY creneaux.date_heure ASC";
+        return "SELECT * FROM relation1 " + "INNER JOIN compte ON compte.id_compte = relation1.id_compte " + "INNER JOIN creneaux ON creneaux.id_creneaux = relation1.id_creneaux " + "INNER JOIN animation ON animation.id = creneaux.id " + "WHERE creneaux.date_heure BETWEEN '" + startOfWeek + "' AND '" + endOfWeek + "' " + "ORDER BY creneaux.date_heure ASC";
     }
 
     /**
@@ -200,17 +192,17 @@ public class DatabaseHelper {
      * @param email
      */
     public static void addAnimateur(String nom, String prenom, String email) {
-    String mdp = StringGenerator.generateRandomString(8);
-    try (Connection conn = initialiserConnexion(); PreparedStatement pstmt = conn.prepareStatement("INSERT INTO compte (nom, prenom, email, password, role) VALUES (?, ?, ?, ?, 'animateur')")) {
-        pstmt.setString(1, nom);
-        pstmt.setString(2, prenom);
-        pstmt.setString(3, email);
-        pstmt.setString(4, mdp);
-        pstmt.executeUpdate();
-    } catch (SQLException e) {
-        e.printStackTrace();
+        String mdp = StringGenerator.generateRandomString(8);
+        try (Connection conn = initialiserConnexion(); PreparedStatement pstmt = conn.prepareStatement("INSERT INTO compte (nom, prenom, email, password, role) VALUES (?, ?, ?, ?, 'animateur')")) {
+            pstmt.setString(1, nom);
+            pstmt.setString(2, prenom);
+            pstmt.setString(3, email);
+            pstmt.setString(4, mdp);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-}
 
     /**
      * Supression de Animateur
@@ -318,6 +310,18 @@ public class DatabaseHelper {
         try (Connection conn = initialiserConnexion(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery("SELECT id_compte FROM compte WHERE nom = '" + nomAnim + "' AND prenom = '" + prenomAnim + "'")) {
             rs.next();
             id = rs.getInt("id_compte");
+            return id;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
+
+    public static int getIdGlobal() {
+        int id = -1;
+        try (Connection conn = initialiserConnexion(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery("SELECT MAX(id_global) FROM creneaux")) {
+            rs.next();
+            id = rs.getInt("MAX(id_global)");
             return id;
         } catch (SQLException e) {
             e.printStackTrace();
