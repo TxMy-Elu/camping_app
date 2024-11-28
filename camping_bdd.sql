@@ -196,6 +196,25 @@ CREATE TABLE IF NOT EXISTS `inscription` (
     KEY `inscription_creneaux_FK` (`id_creneaux`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la tbale 'membre'
+--
+
+DROP TABLE IF EXISTS `membre`;
+CREATE TABLE IF NOT EXISTS `membre` (
+    `id_membre` INT NOT NULL AUTO_INCREMENT,
+    `prenom` VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    `nom` VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+    `age` INT NOT NULL,
+    `id_compte` INT NOT NULL,
+    PRIMARY KEY (`id_membre`),
+    KEY `membre_compte_FK` (`id_compte`),
+    CONSTRAINT `membre_compte_FK` FOREIGN KEY (`id_compte`) REFERENCES `compte` (`id_compte`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Contraintes pour les tables déchargées
 --
