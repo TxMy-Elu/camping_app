@@ -125,6 +125,7 @@ CREATE TABLE IF NOT EXISTS `compte` (
     `password` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `role` VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     `absences` INT NOT NULL DEFAULT 0,
+    `bloque` BOOLEAN NOT NULL DEFAULT FALSE,
     PRIMARY KEY (`id_compte`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
