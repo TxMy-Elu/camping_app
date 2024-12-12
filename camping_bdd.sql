@@ -198,7 +198,8 @@ CREATE TABLE IF NOT EXISTS `inscription` (
   `id_compte` int NOT NULL,
   `id_creneaux` int NOT NULL,
   `date_inscription` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `liste_attente` tinyint(1) NOT NULL DEFAULT '0',
+  `liste_attente` BOOLEAN NOT NULL DEFAULT FALSE,
+  `est_valide` BOOLEAN NOT NULL DEFAULT TRUE,
   PRIMARY KEY (`id_inscription`),
   KEY `inscription_compte_FK` (`id_compte`),
   KEY `inscription_creneaux_FK` (`id_creneaux`)
